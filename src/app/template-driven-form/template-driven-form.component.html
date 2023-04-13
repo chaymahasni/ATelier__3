@@ -1,0 +1,82 @@
+<div>
+    <div>
+      <fieldset>
+        <form #form="ngForm">
+          <legend> Informations générales </legend>
+          <table>
+            <tbody>
+            <tr>
+              <td>Nom</td>
+              <td><input type="text" name="name" ngModel #name="ngModel" required /></td>
+            </tr>
+            <tr>
+              <div *ngIf="name.touched && !name.valid">
+                <div class="erreur" *ngIf="name.errors?.['required']">champ required</div>
+              </div>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td><input type="text" name="email" ngModel #email="ngModel" required
+                         pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3}$" /></td>
+            </tr>
+            <tr>
+              <div *ngIf="email.dirty && !email.valid || email.touched">
+                <div class="erreur" *ngIf="email.errors?.['required']">champ required</div>
+                <div class="erreur" *ngIf="email.errors?.['pattern']"></div>
+              </div>
+            </tr>
+            </tbody>
+          </table>
+          <div>
+            <fieldset>
+              <legend> Informationsde Payement </legend>
+              <table>
+                <tbody>
+                <tr>
+                  <td>Type De Carte</td>
+                  <td><input type="text" name="typecatre" ngModel #typecatre="ngModel" required />
+                  </td>
+                </tr>
+                <tr>
+                  <div *ngIf="typecatre.touched ">
+                    <div class="erreur" *ngIf="typecatre.errors?.['required']">champ required</div>
+                  </div>
+                </tr>
+                <tr>
+                  <td>Numméro De Carte</td>
+                  <td><input type="text" name="numcarte" ngModel #numcarte="ngModel" required
+                             minlength="16" maxlength="16" /></td>
+                </tr>
+                <tr>
+                  <div
+                    *ngIf="numcarte.touched  || numcarte.errors?.['minlength'] &&  numcarte.errors?.['maxlength']">
+                    <div class="erreur" *ngIf="numcarte.errors?.['required']">champ required</div>
+                    <div class="erreur" *ngIf="numcarte.errors?.['minlength']">il faut 16 n</div>
+                    <div class="erreur" *ngIf="numcarte.errors?.['maxlength']">il faut 16 n</div>
+                  </div>
+                </tr>
+                <tr>
+                  <td>Date Expiration</td>
+                  <td><input type="text" name="dateexp" ngModel #dateexp="ngModel" required /></td>
+                </tr>
+                <tr>
+                  <div *ngIf="dateexp.touched ">
+                    <div class="erreur" *ngIf="dateexp.errors?.['required']">champ required</div>
+                  </div>
+                </tr>
+                <tr>
+                  <td>Code</td>
+                  <td><input type="text" name="code" ngModel #code="ngModel" [hidden]="!typecatre.valid || !numcarte.valid || !dateexp.valid"/></td>
+                </tr>
+                </tbody>
+              </table>
+            </fieldset>
+          </div>
+          <br>
+          <div>
+            <input type="button" value="Ajouter" [disabled]="!form.valid">
+          </div>
+        </form>
+      </fieldset>
+    </div>
+  </div>
